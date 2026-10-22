@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 720" role="img" aria-labelledby="t">
+  <title id="t">ARTİVA</title>
+  <defs></defs>
+  <mask id="gap-c" maskUnits="userSpaceOnUse" x="0" y="0" width="720" height="560">
+      <rect width="720" height="560" fill="#fff"/>
+      <path d="M30 512C150 468 228 326 380 280C472 252 592 250 690 320C600 300 522 310 444 334C300 378 228 494 30 512Z" fill="#000" stroke="#000" stroke-width="26" stroke-linejoin="round"/>
+    </mask>
+    <g transform="translate(32.73 105.45) scale(0.91)">
+      <g mask="url(#gap-c)">
+        <path d="M300 25H338L219.5 420L113 470Z" fill="#1E2C4E"/>
+        <path d="M346 25H466L629.2 535H509.2Z" fill="#1E2C4E"/>
+      </g>
+      <path d="M30 512C150 468 228 326 380 280C472 252 592 250 690 320C600 300 522 310 444 334C300 378 228 494 30 512Z" fill="#BF9A62"/>
+    </g>
+</svg>

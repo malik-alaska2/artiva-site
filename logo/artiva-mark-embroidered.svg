@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 720" role="img" aria-labelledby="t">
+  <title id="t">ARTİVA</title>
+  <defs>
+    <pattern id="sn1" width="6.5" height="6.5" patternUnits="userSpaceOnUse" patternTransform="rotate(-32)">
+      <rect width="6.5" height="6.5" fill="#1E2C4E"/>
+      <rect width="2.21" height="6.5" fill="#33467A"/>
+      <rect x="5.2" width="1.3" height="6.5" fill="#121B33"/>
+    </pattern>
+    <pattern id="sn2" width="6.5" height="6.5" patternUnits="userSpaceOnUse" patternTransform="rotate(24)">
+      <rect width="6.5" height="6.5" fill="#1C2A4A"/>
+      <rect width="2.21" height="6.5" fill="#2E4170"/>
+      <rect x="5.2" width="1.3" height="6.5" fill="#111A30"/>
+    </pattern>
+    <pattern id="sn3" width="4.4" height="4.4" patternUnits="userSpaceOnUse" patternTransform="rotate(78)">
+      <rect width="4.4" height="4.4" fill="#1E2C4E"/>
+      <rect width="1.5" height="4.4" fill="#34487C"/>
+      <rect x="3.52" width="0.88" height="4.4" fill="#121B33"/>
+    </pattern>
+    <pattern id="sg1" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(58)">
+      <rect width="6" height="6" fill="#BF9A62"/>
+      <rect width="2.04" height="6" fill="#E6C995"/>
+      <rect x="4.8" width="1.2" height="6" fill="#8E6A3A"/>
+    </pattern>
+    <pattern id="sg2" width="3" height="3" patternUnits="userSpaceOnUse" patternTransform="rotate(80)">
+      <rect width="3" height="3" fill="#BF9A62"/>
+      <rect width="1.02" height="3" fill="#E6C995"/>
+      <rect x="2.4" width="0.6" height="3" fill="#8E6A3A"/>
+    </pattern>
+    <linearGradient id="sheen" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fff" stop-opacity=".16"/>
+      <stop offset=".5" stop-color="#fff" stop-opacity="0"/>
+      <stop offset="1" stop-color="#000" stop-opacity=".18"/>
+    </linearGradient>
+    <filter id="thread" x="-4%" y="-6%" width="108%" height="116%" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2" seed="7" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="2.4" xChannelSelector="R" yChannelSelector="G" result="d"/>
+      <feMorphology in="d" operator="erode" radius="1.6" result="er"/>
+      <feComposite in="d" in2="er" operator="out" result="ring"/>
+      <feFlood flood-color="#0A1022" flood-opacity=".42"/>
+      <feComposite in2="ring" operator="in" result="edge"/>
+      <feGaussianBlur in="d" stdDeviation="2" result="bl"/>
+      <feOffset in="bl" dy="2.6" result="off"/>
+      <feFlood flood-color="#0A1022" flood-opacity=".34"/>
+      <feComposite in2="off" operator="in" result="shadow"/>
+      <feMerge><feMergeNode in="shadow"/><feMergeNode in="d"/><feMergeNode in="edge"/></feMerge>
+    </filter></defs>
+  <mask id="gap-f" maskUnits="userSpaceOnUse" x="0" y="0" width="720" height="560">
+      <rect width="720" height="560" fill="#fff"/>
+      <path d="M30 512C150 468 228 326 380 280C472 252 592 250 690 320C600 300 522 310 444 334C300 378 228 494 30 512Z" fill="#000" stroke="#000" stroke-width="26" stroke-linejoin="round"/>
+    </mask>
+    <g transform="translate(32.73 105.45) scale(0.91)">
+      <g mask="url(#gap-f)">
+        <g filter="url(#thread)"><path d="M300 25H338L219.5 420L113 470Z" fill="url(#sn1)"/><path d="M300 25H338L219.5 420L113 470Z" fill="url(#sheen)"/></g>
+        <g filter="url(#thread)"><path d="M346 25H466L629.2 535H509.2Z" fill="url(#sn2)"/><path d="M346 25H466L629.2 535H509.2Z" fill="url(#sheen)"/></g>
+      </g>
+      <g filter="url(#thread)"><path d="M30 512C150 468 228 326 380 280C472 252 592 250 690 320C600 300 522 310 444 334C300 378 228 494 30 512Z" fill="url(#sg1)"/><path d="M30 512C150 468 228 326 380 280C472 252 592 250 690 320C600 300 522 310 444 334C300 378 228 494 30 512Z" fill="url(#sheen)"/></g>
+    </g>
+</svg>
