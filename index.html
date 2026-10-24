@@ -36,27 +36,17 @@
 
 *,*::before,*::after{box-sizing:border-box}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;scrollbar-color:var(--gold-lo) var(--velvet-deep)}
-/* cursor: the embroidery needle; over anything clickable the thread loops and the tip glints */
+/* cursor: a sırma arrowhead in the logo's material, navy satin edged with couched gold cord;
+   over anything clickable the body fills with laid gold threads */
 html{
-  cursor:url("assets/dival/cursor-needle-32.png") 1 1, auto;
-  cursor:-webkit-image-set(url("assets/dival/cursor-needle-32.png") 1x, url("assets/dival/cursor-needle-64.png") 2x) 1 1, auto;
-  cursor:image-set(url("assets/dival/cursor-needle-32.png") 1x, url("assets/dival/cursor-needle-64.png") 2x) 1 1, auto;
+  cursor:url("assets/dival/cursor-arrow-32.png") 2 2, auto;
+  cursor:-webkit-image-set(url("assets/dival/cursor-arrow-32.png") 1x, url("assets/dival/cursor-arrow-64.png") 2x) 2 2, auto;
+  cursor:image-set(url("assets/dival/cursor-arrow-32.png") 1x, url("assets/dival/cursor-arrow-64.png") 2x) 2 2, auto;
 }
-html.live-thread{
-  cursor:url("assets/dival/cursor-needle-bare-32.png") 1 1, auto;
-  cursor:-webkit-image-set(url("assets/dival/cursor-needle-bare-32.png") 1x, url("assets/dival/cursor-needle-bare-64.png") 2x) 1 1, auto;
-  cursor:image-set(url("assets/dival/cursor-needle-bare-32.png") 1x, url("assets/dival/cursor-needle-bare-64.png") 2x) 1 1, auto;
-}
-html.live-thread :is(a,button,[role="button"],label,summary){
-  cursor:url("assets/dival/cursor-needle-pointer-bare-32.png") 1 1, pointer;
-  cursor:-webkit-image-set(url("assets/dival/cursor-needle-pointer-bare-32.png") 1x, url("assets/dival/cursor-needle-pointer-bare-64.png") 2x) 1 1, pointer;
-  cursor:image-set(url("assets/dival/cursor-needle-pointer-bare-32.png") 1x, url("assets/dival/cursor-needle-pointer-bare-64.png") 2x) 1 1, pointer;
-}
-.thread-canvas{position:fixed;inset:0;z-index:200;pointer-events:none}
 a,button,[role="button"],label,summary{
-  cursor:url("assets/dival/cursor-needle-pointer-32.png") 1 1, pointer;
-  cursor:-webkit-image-set(url("assets/dival/cursor-needle-pointer-32.png") 1x, url("assets/dival/cursor-needle-pointer-64.png") 2x) 1 1, pointer;
-  cursor:image-set(url("assets/dival/cursor-needle-pointer-32.png") 1x, url("assets/dival/cursor-needle-pointer-64.png") 2x) 1 1, pointer;
+  cursor:url("assets/dival/cursor-arrow-pointer-32.png") 2 2, pointer;
+  cursor:-webkit-image-set(url("assets/dival/cursor-arrow-pointer-32.png") 1x, url("assets/dival/cursor-arrow-pointer-64.png") 2x) 2 2, pointer;
+  cursor:image-set(url("assets/dival/cursor-arrow-pointer-32.png") 1x, url("assets/dival/cursor-arrow-pointer-64.png") 2x) 2 2, pointer;
 }
 body{
   margin:0;color:var(--ivory-soft);font:400 17px/1.7 var(--text);
@@ -618,101 +608,6 @@ section[id]{scroll-margin-top:84px}
   window.addEventListener('scroll', onScroll, {passive:true});
   window.addEventListener('resize', onScroll);
   onScroll();
-
-  // the needle is threaded: two loose ends leave the eye, a long one and a short tail.
-  // each is a verlet rope with a little bending stiffness, so it moves like thread, not string; it sleeps when still
-  if (!reduce && window.matchMedia('(hover: hover) and (pointer: fine)').matches) (function(){
-    document.documentElement.classList.add('live-thread');
-    var cv = document.createElement('canvas'); cv.className = 'thread-canvas'; cv.setAttribute('aria-hidden', 'true');
-    document.body.appendChild(cv);
-    var ctx = cv.getContext('2d'), W = 0, H = 0;
-    function size(){
-      var dpr = Math.min(window.devicePixelRatio || 1, 2); W = innerWidth; H = innerHeight;
-      cv.width = W * dpr; cv.height = H * dpr; cv.style.width = W + 'px'; cv.style.height = H + 'px';
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0); draw();
-    }
-    // where each end leaves the eye, relative to the hotspot (needle tip), for the plain and the pointer cursor
-    var ANCHOR = {plain:{long:[17.47, 19.3], tail:[19.3, 17.47]}, hot:{long:[14.98, 21.29], tail:[17.03, 19.69]}};
-    var GRAV = .26, DRAG = .972, mx = 0, my = 0, shown = false, still = 0, running = false, aim = ANCHOR.plain;
-    function rope(n, len, key){ var r = {n:n, len:len, key:key, at:aim[key].slice(), p:[]}; for (var i = 0; i < n; i++) r.p.push({x:0, y:0, px:0, py:0}); return r; }
-    var ropes = [rope(22, 2, 'long'), rope(7, 1.8, 'tail')];
-    function hang(r){ var x = mx + r.at[0], y = my + r.at[1]; r.p.forEach(function(q, i){ q.x = q.px = x; q.y = q.py = y + i * r.len; }); }
-    function step(r){
-      var t = aim[r.key];
-      r.at[0] += (t[0] - r.at[0]) * .35; r.at[1] += (t[1] - r.at[1]) * .35;
-      var P = r.p, a = P[0], e = 0, i, k;
-      a.x = a.px = mx + r.at[0]; a.y = a.py = my + r.at[1];
-      for (i = 1; i < r.n; i++){
-        var q = P[i], vx = (q.x - q.px) * DRAG, vy = (q.y - q.py) * DRAG;
-        q.px = q.x; q.py = q.y; q.x += vx; q.y += vy + GRAV; e += vx * vx + vy * vy;
-      }
-      for (k = 0; k < 14; k++){
-        for (i = 1; i < r.n; i++) pull(P[i - 1], P[i], r.len, i === 1, 1);
-        for (i = 2; i < r.n; i++) pull(P[i - 2], P[i], r.len * 1.94, i === 2, .06);  // bending stiffness
-      }
-      // follow-the-leader: no link may end up longer than its rest length, so a fast flick drags
-      // the thread along instead of leaving it behind; most of the correction is taken out of the velocity
-      for (i = 1; i < r.n; i++){
-        var b = P[i], f0 = P[i - 1], dx = b.x - f0.x, dy = b.y - f0.y, d = Math.hypot(dx, dy);
-        if (d > r.len){
-          var cx = f0.x + dx / d * r.len - b.x, cy = f0.y + dy / d * r.len - b.y;
-          b.x += cx; b.y += cy; b.px += cx * .85; b.py += cy * .85;
-        }
-      }
-      return e;
-    }
-    function pull(a, b, rest, pinned, stiff){
-      var dx = b.x - a.x, dy = b.y - a.y, d = Math.hypot(dx, dy) || 1e-4, f = (d - rest) / d * stiff;
-      if (pinned){ b.x -= dx * f; b.y -= dy * f; }
-      else { a.x += dx * f / 2; a.y += dy * f / 2; b.x -= dx * f / 2; b.y -= dy * f / 2; }
-    }
-    function path(P, from, to, ox, oy){
-      ctx.beginPath(); ctx.moveTo(P[from].x + ox, P[from].y + oy);
-      for (var i = from + 1; i < to; i++){
-        var q = P[i], r = P[i + 1];
-        ctx.quadraticCurveTo(q.x + ox, q.y + oy, (q.x + r.x) / 2 + ox, (q.y + r.y) / 2 + oy);
-      }
-      ctx.lineTo(P[to].x + ox, P[to].y + oy);
-    }
-    function thread(r){
-      var P = r.p, n = r.n, cut = n - 3;     // the last few links taper: the cut end of the thread
-      ctx.setLineDash([]);
-      path(P, 0, n - 1, .9, 1.4); ctx.lineWidth = 1.5; ctx.strokeStyle = 'rgba(0,0,0,.4)'; ctx.stroke();   // shadow on the velvet
-      path(P, 0, cut, 0, 0); ctx.lineWidth = 1.85; ctx.strokeStyle = '#3A2810'; ctx.stroke();               // thread edge
-      path(P, 0, cut, 0, 0); ctx.lineWidth = 1.15; ctx.strokeStyle = '#C9A25F'; ctx.stroke();               // sırma
-      path(P, cut, n - 1, 0, 0); ctx.lineWidth = 1.2; ctx.strokeStyle = '#8E6A3A'; ctx.stroke();            // tapering tip
-      path(P, cut, n - 1, 0, 0); ctx.lineWidth = .7; ctx.strokeStyle = '#C9A25F'; ctx.stroke();
-      path(P, 0, cut, -.25, -.3); ctx.setLineDash([.8, 1.5]); ctx.lineWidth = .45;                        // twist glints
-      ctx.strokeStyle = 'rgba(250,230,176,.95)'; ctx.stroke(); ctx.setLineDash([]);
-    }
-    function draw(){
-      ctx.clearRect(0, 0, W, H);
-      if (!shown) return;
-      ctx.lineCap = 'round'; ctx.lineJoin = 'round';
-      thread(ropes[1]); thread(ropes[0]);
-    }
-    function loop(){
-      var e = step(ropes[0]) + step(ropes[1]); draw(); still++;
-      if (e < .002 && still > 90){ running = false; return; }
-      requestAnimationFrame(loop);
-    }
-    function wake(){ if (!running){ running = true; requestAnimationFrame(loop); } }
-    addEventListener('pointermove', function(e){
-      if (e.pointerType !== 'mouse') return;
-      mx = e.clientX; my = e.clientY;
-      var t = e.target, hot = t && t.closest && t.closest('a,button,[role="button"],label,summary');
-      aim = hot ? ANCHOR.hot : ANCHOR.plain;
-      if (!shown){ shown = true; ropes.forEach(function(r){ r.at = aim[r.key].slice(); hang(r); }); }
-      still = 0; wake();
-    }, {passive:true});
-    function hide(){ shown = false; draw(); }
-    document.documentElement.addEventListener('mouseleave', hide);
-    document.addEventListener('mouseout', function(e){ if (!e.relatedTarget) hide(); });     // left the window
-    document.addEventListener('visibilitychange', function(){ if (document.hidden) hide(); });
-    addEventListener('blur', hide);
-    addEventListener('resize', size);
-    size();
-  })();
 
   document.getElementById('year').textContent = new Date().getFullYear();
 })();
