@@ -194,16 +194,20 @@ html.lit .velvet-lit::before{display:none}
 .role h3{font-size:clamp(24px, 2.2vw, 32px);line-height:1.2;margin-bottom:16px;max-width:18ch}
 .role p{max-width:44ch}
 
-/* services: sticky title, couched-cord emblem rows */
-.services{display:grid;grid-template-columns:minmax(280px, 4fr) 7fr;gap:clamp(40px, 6vw, 96px);align-items:start}
-.services-head{position:sticky;top:120px}
-.services-head .h2{margin-bottom:24px}
-.svc-list{list-style:none;margin:0;padding:0}
-.svc{display:grid;grid-template-columns:72px 1fr;gap:6px 28px;padding:34px 0;position:relative}
-.svc+.svc::before{content:"";position:absolute;top:-5px;left:0;right:0;height:9px;background:var(--cord) 0 0 / 450px 9px repeat-x;filter:brightness(.8)}   /* a finer cord, not a see-through one */
-.svc img{width:72px;height:72px;grid-row:span 2}
-.svc h3{font-size:clamp(22px, 2vw, 28px);line-height:1.2;align-self:end}
-.svc p{max-width:52ch}
+/* services: title beside its intro, then the seven services in a four-column grid (4 + 3) */
+.services-head{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:end;margin-bottom:40px}
+.services-head .h2{margin:0}
+.svc-list{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4, 1fr);gap:8px 36px}
+.svc{position:relative;padding:30px 0 18px}
+.svc::before{content:"";position:absolute;top:-4px;left:0;right:0;height:8px;background:var(--cord) 0 0 / 400px 8px repeat-x;filter:brightness(.72)}
+.svc img{display:block}
+.svc h3{font-size:clamp(20px, 1.7vw, 23px);line-height:1.2;margin-bottom:8px}
+.svc p{font-size:15px;line-height:1.55}
+.svc img{width:48px;height:48px;margin-bottom:14px}
+.svc--more{display:flex;flex-direction:column;align-items:flex-start}
+.svc--more h3{color:var(--gold-hi)}
+.svc--more p{margin-bottom:18px}
+.btn--compact{min-height:46px;padding:0 22px;font-size:15px}
 
 /* sectors: eight names around one embroidered medallion */
 .sectors{text-align:center}
@@ -402,6 +406,7 @@ html.lit .velvet-lit::before{display:none}
 
 /* ---------- responsive ---------- */
 @media (max-width:1080px){
+  .svc-list{grid-template-columns:repeat(2, 1fr)}
   .nav{gap:20px}
   .tools .btn--sm{display:none}
   .tel-btn{display:grid}
@@ -417,8 +422,7 @@ html.lit .velvet-lit::before{display:none}
   .tools{margin-left:auto}
   .roles-head,.process-head{grid-template-columns:1fr;gap:20px}
   .roles{grid-template-columns:1fr}
-  .services{grid-template-columns:1fr}
-  .services-head{position:static}
+  .services-head{grid-template-columns:1fr;gap:20px}
   .steps{grid-template-columns:1fr;gap:34px}
   .steps::before,.steps::after{top:32px;bottom:32px;left:26px;right:auto;width:12px;height:auto;background:var(--cord-v) 0 0 / 12px 600px repeat-y}
   .steps::after{clip-path:inset(0 0 calc(100% - var(--p, 0) * 100%) 0)}
@@ -443,8 +447,10 @@ html.lit .velvet-lit::before{display:none}
   .sector-list li{position:static;transform:none}
   .sector-list button{width:100%;max-width:none;font-size:17px}
   .role{padding:38px 22px 42px}
-  .svc{grid-template-columns:52px 1fr;gap:4px 18px}
-  .svc img{width:52px;height:52px}
+  .svc-list{grid-template-columns:1fr}
+  .svc{display:grid;grid-template-columns:44px 1fr;gap:4px 16px;padding:24px 0 14px}
+  .svc img{width:44px;height:44px;margin:0;grid-row:span 2}
+  .svc.svc--more{display:flex;padding-top:26px}
   .goods-tabs{grid-template-columns:1fr}
   .goods-stage{padding:34px 22px 38px}
   .goods-emblem{width:72px;height:72px}
@@ -546,6 +552,7 @@ html.lit .velvet-lit::before{display:none}
         <li class="svc"><img src="assets/dival/icon-trade.webp" alt="" width="200" height="200" loading="lazy"><h3 data-i18n="s5.t">İthalat ve ihracat işlemleri</h3><p data-i18n="s5.d">Yurt dışıyla yapılan işlerde yazışmaları, numuneleri, belgeleri ve sevkiyat tarihlerini tek elden takip ederiz.</p></li>
         <li class="svc"><img src="assets/dival/icon-terms.webp" alt="" width="200" height="200" loading="lazy"><h3 data-i18n="s6.t">Ürün ve fiyat netleştirme</h3><p data-i18n="s6.d">Ürünü, miktarı, beklenen kaliteyi ve hedef fiyatı yazılı hâle getiririz; pazarlık sağlam bir temelle başlar.</p></li>
         <li class="svc"><img src="assets/dival/icon-market.webp" alt="" width="200" height="200" loading="lazy"><h3 data-i18n="s7.t">Pazar araştırması</h3><p data-i18n="s7.d">Yeni bir ürüne ya da ülkeye girmeden önce talebi, rakipleri ve fiyatları inceler, size kısa bir rapor sunarız.</p></li>
+        <li class="svc svc--more"><h3 data-i18n="s8.t">Aradığınız hizmet listede yok mu?</h3><p data-i18n="s8.d">Bizi arayın, ihtiyacınıza birlikte bakalım.</p><a class="btn btn--line btn--compact" href="tel:+905332566813"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg><span data-i18n="s8.btn">Bizi arayın</span></a></li>
       </ul>
     </div>
   </section>
@@ -764,6 +771,9 @@ html.lit .velvet-lit::before{display:none}
     'call.btn':'Call now',
     'call.map':'Show on map',
     'foot.rights':'All rights reserved.',
+    's8.t':'Don’t see the service you need?',
+    's8.d':'Call us and we’ll look at your need together.',
+    's8.btn':'Call us',
     'c.072':'Botswana',
     'c.716':'Zimbabwe',
     'c.834':'Tanzania',
