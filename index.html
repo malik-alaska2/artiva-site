@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>ARTİVA — İç ve Dış Ticaret A.Ş.</title>
-<meta name="description" content="ARTIVA İç ve Dış Ticaret A.Ş. — İstanbul merkezli aracılık ve ticaret şirketi: üretici araştırması, alıcı–satıcı buluşturma, ithalat-ihracat yönetimi ve kendi hesabına alım-satım.">
+<meta name="description" content="ARTIVA İç ve Dış Ticaret A.Ş. — İstanbul'da aracılık ve ticaret: üretici bulma, alıcı ve satıcıyı buluşturma, ithalat ve ihracat işlemleri, kendi hesabına alım satım.">
 <meta name="theme-color" content="#0B1124">
 <meta property="og:title" content="ARTİVA — İç ve Dış Ticaret A.Ş.">
-<meta property="og:description" content="Ticaretin iki ucunu tek iplikle bağlıyoruz.">
+<meta property="og:description" content="Üreticiyle alıcıyı buluşturuyoruz.">
 <meta property="og:image" content="assets/dival/logo-dival-photo.webp">
 <link rel="icon" type="image/svg+xml" href="logo/artiva-mark.svg">
 <link rel="preload" as="image" href="assets/dival/logo-dival-cut.webp">
@@ -72,10 +72,18 @@ section[id]{scroll-margin-top:84px}
 .plate{display:block;width:calc(var(--w) * 1em);max-width:100%;height:auto;margin-left:-.12em}
 .cord{height:12px;background:var(--cord) 0 0 / 600px 12px repeat-x}
 .velvet-lit{position:relative;isolation:isolate}
-.velvet-lit::before{ /* soft pile sheen: velvet catches light in broad pools */
+.velvet-lit::before{ /* soft pile sheen: velvet catches light in broad pools (a fixed pool where there is no pointer) */
   content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
-  background:radial-gradient(ellipse 60% 55% at var(--lx,50%) var(--ly,38%), rgba(120,140,205,.16), rgba(120,140,205,0) 70%);
+  background:radial-gradient(ellipse 60% 55% at 50% 38%, rgba(120,140,205,.16), rgba(120,140,205,0) 70%);
 }
+/* with a mouse the pool follows the pointer over the whole page: one fixed layer, so no section edge can cut it */
+.sheen{
+  position:fixed;inset:0;z-index:40;pointer-events:none;mix-blend-mode:soft-light;opacity:0;
+  transition:opacity .6s var(--ease);
+  background:radial-gradient(circle 560px at var(--lx,50%) var(--ly,40%), rgba(255,255,255,.36), rgba(255,255,255,0) 72%);
+}
+html.lit .sheen.on{opacity:1}
+html.lit .velvet-lit::before{display:none}
 
 /* ---------- buttons ---------- */
 .btn{
@@ -189,7 +197,7 @@ section[id]{scroll-margin-top:84px}
 .sectors{text-align:center}
 .sectors .h2{margin-bottom:18px}
 .sectors .intro{margin:0 auto}
-.medallion-wrap{position:relative;width:min(760px, 100%);aspect-ratio:1;margin:56px auto 0}
+.medallion-wrap{position:relative;width:min(760px, 100%);aspect-ratio:1;margin:56px auto 0;container-type:inline-size}
 .medallion{position:absolute;inset:22%;display:grid;place-items:center}
 .medallion .ring{position:absolute;inset:0;width:100%;height:100%}
 .medallion .mark{width:54%;height:auto;margin-top:-10%}
@@ -201,7 +209,9 @@ section[id]{scroll-margin-top:84px}
 .sector-list li{
   --a:calc(var(--i) * 45deg - 90deg);
   position:absolute;left:50%;top:50%;
-  transform:translate(-50%, -50%) rotate(var(--a)) translate(min(340px, 44vw)) rotate(calc(-1 * var(--a)));
+  transform:translate(-50%, -50%) rotate(var(--a)) translate(min(340px, 40vw)) rotate(calc(-1 * var(--a)));
+  /* the radius follows the circle, not the window, so the side labels never pass the screen edge */
+  transform:translate(-50%, -50%) rotate(var(--a)) translate(min(340px, 42cqi)) rotate(calc(-1 * var(--a)));
 }
 .sector-list button{
   border:0;background:transparent;padding:10px 12px;border-radius:8px;
@@ -317,10 +327,10 @@ section[id]{scroll-margin-top:84px}
       <span>ARTİVA</span>
     </a>
     <nav class="nav" id="nav" aria-label="Ana menü">
-      <a href="#biz" data-i18n="nav.who">Biz kimiz</a>
-      <a href="#hizmetler" data-i18n="nav.what">Ne yapıyoruz</a>
+      <a href="#biz" data-i18n="nav.who">Hakkımızda</a>
+      <a href="#hizmetler" data-i18n="nav.what">Hizmetler</a>
       <a href="#sektorler" data-i18n="nav.sectors">Sektörler</a>
-      <a href="#yol" data-i18n="nav.how">Nasıl ilerliyoruz</a>
+      <a href="#yol" data-i18n="nav.how">Nasıl çalışıyoruz</a>
       <a href="#iletisim" data-i18n="nav.contact">İletişim</a>
     </nav>
     <div class="tools">
@@ -342,14 +352,14 @@ section[id]{scroll-margin-top:84px}
       <img src="assets/dival/logo-dival-cut.webp" alt="ARTİVA İç ve Dış Ticaret Anonim Şirketi" width="1200" height="1043" fetchpriority="high">
       <div class="shine" aria-hidden="true"></div>
     </div>
-    <h1><span class="sr-only" data-i18n="hero.title">Ticaretin iki ucunu tek iplikle bağlıyoruz.</span><img class="plate" data-plate="h1" src="assets/dival/plate-h1-tr.webp" alt="" width="1944" height="515" style="--w:9.7214"></h1>
-    <p class="lede" data-i18n="hero.lede">Üreticiyi alıcıyla buluşturuyor, gerektiğinde malı kendimiz alıp satıyoruz — İstanbul'dan, yurt içine ve yurt dışına.</p>
+    <h1><span class="sr-only" data-i18n="hero.title">Üreticiyle alıcıyı buluşturuyoruz.</span><img class="plate" data-plate="h1" src="assets/dival/plate-h1-tr.webp" alt="" width="1465" height="515" style="--w:7.3269"></h1>
+    <p class="lede" data-i18n="hero.lede">Size uygun üreticiyi ya da alıcıyı buluyoruz; gerektiğinde ürünü kendimiz alıp satıyoruz. İstanbul'dan Türkiye'nin her yerine ve yurt dışına çalışıyoruz.</p>
     <div class="actions">
       <a class="btn" href="tel:+905332566813">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>
         <span data-i18n="hero.call">Bizi arayın</span>
       </a>
-      <a class="btn btn--line" href="#hizmetler" data-i18n="hero.more">Ne yapıyoruz</a>
+      <a class="btn btn--line" href="#hizmetler" data-i18n="hero.more">Hizmetlerimiz</a>
     </div>
   </section>
 
@@ -358,17 +368,17 @@ section[id]{scroll-margin-top:84px}
   <section class="section" id="biz">
     <div class="wrap">
       <div class="roles-head">
-        <h2 class="h2"><span class="sr-only" data-i18n="who.title">Hem aracı, hem tüccar.</span><img class="plate" data-plate="who" src="assets/dival/plate-who-tr.webp" alt="" width="1122" height="515" style="--w:5.6091"></h2>
-        <p class="intro" data-i18n="who.intro">ARTIVA İç ve Dış Ticaret A.Ş., Avrupa ile Asya'nın buluştuğu İstanbul'da, Kağıthane'de kurulu bir ticaret şirketidir. Bazı işlerde tarafları buluşturup süreci yönetiriz; bazılarında ürünü kendi hesabımıza alır, alıcısına biz teslim ederiz. Hangisinin size uygun olduğuna işin başında birlikte karar veririz.</p>
+        <h2 class="h2"><span class="sr-only" data-i18n="who.title">Hem aracıyız hem tedarikçiyiz.</span><img class="plate" data-plate="who" src="assets/dival/plate-who-tr.webp" alt="" width="1571" height="514" style="--w:7.8587"></h2>
+        <p class="intro" data-i18n="who.intro">ARTIVA İç ve Dış Ticaret A.Ş., İstanbul Kağıthane'de bulunan bir ticaret şirketidir. Bazı işlerde alıcıyla satıcıyı buluşturur, süreci baştan sona yönetiriz. Bazı işlerde ise ürünü kendimiz satın alır, alıcıya biz teslim ederiz. Hangi yolun size uygun olduğuna işin başında birlikte karar veririz.</p>
       </div>
       <div class="roles">
         <article class="role">
-          <h3 data-i18n="who.r1.title">Aracı olarak, doğru kapıyı biz çalarız.</h3>
-          <p data-i18n="who.r1.text">Uygun üreticiyi ya da alıcıyı bulur, teklifleri karşılaştırır, görüşmeleri ve siparişi koordine ederiz. Mal, sizinle karşı taraf arasında el değiştirir; biz süreci bir arada tutarız.</p>
+          <h3 data-i18n="who.r1.title">Aracı olarak: doğru firmayı biz buluruz.</h3>
+          <p data-i18n="who.r1.text">Size uygun üreticiyi ya da alıcıyı bulur, teklifleri karşılaştırır, görüşmeleri ve siparişi takip ederiz. Ürün doğrudan sizinle karşı taraf arasında el değiştirir; işin düzgün yürümesini biz sağlarız.</p>
         </article>
         <article class="role">
-          <h3 data-i18n="who.r2.title">Tüccar olarak, karşınızda tek satıcı olur.</h3>
-          <p data-i18n="who.r2.text">Ürünü biz satın alır, faturalandırır ve teslim ederiz. Tek sözleşme, tek fatura, tek muhatap: tedarik zincirinin geri kalanı bizim işimizdir.</p>
+          <h3 data-i18n="who.r2.title">Tedarikçi olarak: tek muhatabınız biziz.</h3>
+          <p data-i18n="who.r2.text">Ürünü biz satın alır, faturasını keser ve size teslim ederiz. Tek sözleşme, tek fatura, tek muhatap. Gerisini biz hallederiz.</p>
         </article>
       </div>
     </div>
@@ -377,17 +387,17 @@ section[id]{scroll-margin-top:84px}
   <section class="section" id="hizmetler" style="padding-top:0">
     <div class="wrap services">
       <div class="services-head">
-        <h2 class="h2"><span class="sr-only" data-i18n="svc.title">Yedi iş, tek adres.</span><img class="plate" data-plate="svc" src="assets/dival/plate-svc-tr.webp" alt="" width="913" height="514" style="--w:4.5657"></h2>
-        <p class="intro" data-i18n="svc.intro">Bir ürünün fabrikadan alıcısına ulaşması için gereken her ilmeği tek elden atıyoruz.</p>
+        <h2 class="h2"><span class="sr-only" data-i18n="svc.title">Yedi hizmet, tek adres.</span><img class="plate" data-plate="svc" src="assets/dival/plate-svc-tr.webp" alt="" width="1167" height="515" style="--w:5.8377"></h2>
+        <p class="intro" data-i18n="svc.intro">Bir ürünün fabrikadan alıcıya ulaşması için gereken her adımı tek elden yürütüyoruz.</p>
       </div>
       <ul class="svc-list">
-        <li class="svc"><img src="assets/dival/icon-own.webp" alt="" width="200" height="200" loading="lazy"><h3 data-i18n="s1.t">Kendi hesabımıza alım-satım</h3><p data-i18n="s1.d">Ürünü üreticiden biz alır, size tek fatura ile satarız. Tedarikin riskini ve takibini üstleniriz.</p></li>
-        <li class="svc"><img src="assets/dival/icon-wholesale.webp" alt="" width="200" height="200" loading="lazy"><h3 data-i18n="s2.t">Toptan tedarik</h3><p data-i18n="s2.d">Düzenli ve yüksek hacimli ihtiyaçlar için kesintisiz bir ürün akışı ve yedek kaynak planı kurarız.</p></li>
-        <li class="svc"><img src="assets/dival/icon-supplier.webp" alt="" width="200" height="200" loading="lazy"><h3 data-i18n="s3.t">Üretici araştırması</h3><p data-i18n="s3.d">İhtiyacınıza uyan fabrikaları bulur; kapasite, ürün yelpazesi ve fiyat seviyesine göre kısa liste çıkarırız.</p></li>
-        <li class="svc"><img src="assets/dival/icon-matching.webp" alt="" width="200" height="200" loading="lazy"><h3 data-i18n="s4.t">Alıcı–satıcı buluşturma</h3><p data-i18n="s4.d">Doğru alıcıyı doğru üreticiyle tanıştırır, ilk görüşmeyi biz hazırlarız.</p></li>
-        <li class="svc"><img src="assets/dival/icon-trade.webp" alt="" width="200" height="200" loading="lazy"><h3 data-i18n="s5.t">İthalat ve ihracat yönetimi</h3><p data-i18n="s5.d">Sınır ötesi işlerde yazışmayı, numuneyi, evrakı ve sevkiyat takvimini tek masadan yürütürüz.</p></li>
-        <li class="svc"><img src="assets/dival/icon-terms.webp" alt="" width="200" height="200" loading="lazy"><h3 data-i18n="s6.t">Ürün tanımı ve fiyat çerçevesi</h3><p data-i18n="s6.d">Ürünü, miktarı, kalite beklentisini ve hedef fiyatı yazıya dökeriz; pazarlık sağlam bir zeminde başlar.</p></li>
-        <li class="svc"><img src="assets/dival/icon-market.webp" alt="" width="200" height="200" loading="lazy"><h3 data-i18n="s7.t">Pazar okuması</h3><p data-i18n="s7.d">Yeni bir ürün ya da ülkeye girmeden önce talebi, rakipleri ve fiyat bandını inceler, kısa bir özet sunarız.</p></li>
+        <li class="svc"><img src="assets/dival/icon-own.webp" alt="" width="200" height="200" loading="lazy"><h3 data-i18n="s1.t">Kendi hesabımıza alım satım</h3><p data-i18n="s1.d">Ürünü üreticiden biz alır, size tek faturayla satarız. Tedarik riskini ve takibini biz üstleniriz.</p></li>
+        <li class="svc"><img src="assets/dival/icon-wholesale.webp" alt="" width="200" height="200" loading="lazy"><h3 data-i18n="s2.t">Toptan tedarik</h3><p data-i18n="s2.d">Düzenli ve büyük miktarlı alımlarda ürünün aksamadan gelmesini sağlar, yedek bir tedarikçiyi de hazır tutarız.</p></li>
+        <li class="svc"><img src="assets/dival/icon-supplier.webp" alt="" width="200" height="200" loading="lazy"><h3 data-i18n="s3.t">Üretici bulma</h3><p data-i18n="s3.d">İhtiyacınıza uygun fabrikaları bulur; kapasite, ürün çeşidi ve fiyata göre kısa bir liste hazırlarız.</p></li>
+        <li class="svc"><img src="assets/dival/icon-matching.webp" alt="" width="200" height="200" loading="lazy"><h3 data-i18n="s4.t">Alıcı ve satıcıyı buluşturma</h3><p data-i18n="s4.d">Doğru alıcıyı doğru üreticiyle tanıştırır, ilk görüşmeyi biz hazırlarız.</p></li>
+        <li class="svc"><img src="assets/dival/icon-trade.webp" alt="" width="200" height="200" loading="lazy"><h3 data-i18n="s5.t">İthalat ve ihracat işlemleri</h3><p data-i18n="s5.d">Yurt dışıyla yapılan işlerde yazışmaları, numuneleri, belgeleri ve sevkiyat tarihlerini tek elden takip ederiz.</p></li>
+        <li class="svc"><img src="assets/dival/icon-terms.webp" alt="" width="200" height="200" loading="lazy"><h3 data-i18n="s6.t">Ürün ve fiyat netleştirme</h3><p data-i18n="s6.d">Ürünü, miktarı, beklenen kaliteyi ve hedef fiyatı yazılı hâle getiririz; pazarlık sağlam bir temelle başlar.</p></li>
+        <li class="svc"><img src="assets/dival/icon-market.webp" alt="" width="200" height="200" loading="lazy"><h3 data-i18n="s7.t">Pazar araştırması</h3><p data-i18n="s7.d">Yeni bir ürüne ya da ülkeye girmeden önce talebi, rakipleri ve fiyatları inceler, size kısa bir rapor sunarız.</p></li>
       </ul>
     </div>
   </section>
@@ -396,8 +406,8 @@ section[id]{scroll-margin-top:84px}
 
   <section class="section sectors" id="sektorler">
     <div class="wrap">
-      <h2 class="h2"><span class="sr-only" data-i18n="sec.title">Sekiz sektör, tek masa.</span><img class="plate" data-plate="sec" src="assets/dival/plate-sec-tr.webp" alt="" width="2036" height="299" style="--w:10.1819"></h2>
-      <p class="intro" data-i18n="sec.intro">Aynı titizlikle çalıştığımız alanlar. Ayrıntı için birini seçin.</p>
+      <h2 class="h2"><span class="sr-only" data-i18n="sec.title">Sekiz sektör, tek ekip.</span><img class="plate" data-plate="sec" src="assets/dival/plate-sec-tr.webp" alt="" width="1952" height="299" style="--w:9.7629"></h2>
+      <p class="intro" data-i18n="sec.intro">Aynı özenle çalıştığımız alanlar. Ayrıntıları görmek için birini seçin.</p>
       <div class="medallion-wrap">
         <div class="medallion">
           <img class="ring" src="assets/dival/ring.webp" alt="" width="700" height="700" loading="lazy">
@@ -411,7 +421,7 @@ section[id]{scroll-margin-top:84px}
           <li style="--i:3"><button type="button" aria-pressed="false" data-key="x4" data-i18n="x4.t">Gıda ve tarım</button></li>
           <li style="--i:4"><button type="button" aria-pressed="false" data-key="x5" data-i18n="x5.t">Elektronik</button></li>
           <li style="--i:5"><button type="button" aria-pressed="false" data-key="x6" data-i18n="x6.t">Tüketim ürünleri</button></li>
-          <li style="--i:6"><button type="button" aria-pressed="false" data-key="x7" data-i18n="x7.t">Kimya ve hammadde</button></li>
+          <li style="--i:6"><button type="button" aria-pressed="false" data-key="x7" data-i18n="x7.t">Kimyasallar ve hammaddeler</button></li>
           <li style="--i:7"><button type="button" aria-pressed="false" data-key="x8" data-i18n="x8.t">Ambalaj ve plastik</button></li>
         </ul>
       </div>
@@ -423,15 +433,15 @@ section[id]{scroll-margin-top:84px}
   <section class="section" id="yol">
     <div class="wrap">
       <div class="process-head">
-        <h2 class="h2"><span class="sr-only" data-i18n="how.title">Beş düğümde bir anlaşma.</span><img class="plate" data-plate="how" src="assets/dival/plate-how-tr.webp" alt="" width="1268" height="514" style="--w:6.3435"></h2>
-        <p class="intro" data-i18n="how.intro">Fiyat, miktar ve kapsam iş başlamadan yazıya geçer. Her aşamayı bir düğümle bağlar, ancak ondan sonra bir sonrakine geçeriz.</p>
+        <h2 class="h2"><span class="sr-only" data-i18n="how.title">Beş adımda bir anlaşma.</span><img class="plate" data-plate="how" src="assets/dival/plate-how-tr.webp" alt="" width="1112" height="515" style="--w:5.5603"></h2>
+        <p class="intro" data-i18n="how.intro">İşe başlamadan önce fiyatı, miktarı ve işin kapsamını yazılı olarak netleştiririz. Bir adımı bitirmeden diğerine geçmeyiz.</p>
       </div>
       <ol class="steps" id="steps">
-        <li class="step"><span class="knot"><span>1</span></span><h3 data-i18n="p1.t">Dinleriz</h3><p data-i18n="p1.d">Ürünü, miktarı, kaliteyi ve hedef fiyatı birlikte netleştiririz.</p></li>
-        <li class="step"><span class="knot"><span>2</span></span><h3 data-i18n="p2.t">Ararız</h3><p data-i18n="p2.d">Üretici ya da alıcı adaylarını tarar, kısa liste çıkarırız.</p></li>
-        <li class="step"><span class="knot"><span>3</span></span><h3 data-i18n="p3.t">Karşılaştırırız</h3><p data-i18n="p3.d">Teklifleri fiyat, miktar ve koşullarıyla yan yana koyarız.</p></li>
-        <li class="step"><span class="knot"><span>4</span></span><h3 data-i18n="p4.t">Bağlarız</h3><p data-i18n="p4.d">Tarafları buluştururuz ya da ürünü kendimiz satın alırız.</p></li>
-        <li class="step"><span class="knot"><span>5</span></span><h3 data-i18n="p5.t">Teslim ederiz</h3><p data-i18n="p5.d">Siparişi teslime kadar izler, sonraki talepler için hazır kalırız.</p></li>
+        <li class="step"><span class="knot"><span>1</span></span><h3 data-i18n="p1.t">Dinleriz</h3><p data-i18n="p1.d">Ürünü, miktarı, kaliteyi ve hedef fiyatı birlikte belirleriz.</p></li>
+        <li class="step"><span class="knot"><span>2</span></span><h3 data-i18n="p2.t">Ararız</h3><p data-i18n="p2.d">Uygun üreticileri ya da alıcıları araştırır, kısa bir liste hazırlarız.</p></li>
+        <li class="step"><span class="knot"><span>3</span></span><h3 data-i18n="p3.t">Karşılaştırırız</h3><p data-i18n="p3.d">Gelen teklifleri fiyat, miktar ve şartlarıyla yan yana koyarız.</p></li>
+        <li class="step"><span class="knot"><span>4</span></span><h3 data-i18n="p4.t">Anlaşırız</h3><p data-i18n="p4.d">Tarafları bir araya getiririz ya da ürünü kendimiz satın alırız.</p></li>
+        <li class="step"><span class="knot"><span>5</span></span><h3 data-i18n="p5.t">Teslim ederiz</h3><p data-i18n="p5.d">Siparişi teslimata kadar takip eder, bir sonraki talebiniz için hazır oluruz.</p></li>
       </ol>
     </div>
   </section>
@@ -440,14 +450,14 @@ section[id]{scroll-margin-top:84px}
   <section class="call" id="iletisim">
     <div class="wrap">
       <h2 class="h2"><span class="sr-only" data-i18n="call.title">Bir telefonla başlayalım.</span><img class="plate" data-plate="call" src="assets/dival/plate-call-tr.webp" alt="" width="1138" height="515" style="--w:5.6902"></h2>
-      <p class="intro" data-i18n="call.intro">Tek numara, tek sorumlu. Ürününüzü, miktarı ve hedef pazarı anlatın; size hangi yolun uygun olduğunu birlikte belirleyelim.</p>
+      <p class="intro" data-i18n="call.intro">Tek numara, tek sorumlu kişi. Ürününüzü, miktarı ve hangi pazarda satış ya da alım yapmak istediğinizi anlatın; size en uygun yolu birlikte bulalım.</p>
       <a class="phone-big" href="tel:+905332566813" aria-label="+90 533 256 68 13"><img class="plate" src="assets/dival/plate-phone.webp" alt="" width="1675" height="299" style="--w:8.3743"></a>
       <div class="actions">
         <a class="btn" href="tel:+905332566813">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>
           <span data-i18n="call.btn">Hemen arayın</span>
         </a>
-        <a class="btn btn--line" href="https://www.google.com/maps/search/?api=1&amp;query=Ye%C5%9Filce%20Mah.%20Desteg%C3%BCl%20Sk.%20No%3A1%2F1%20Ka%C4%9F%C4%B1thane%20%C4%B0stanbul" target="_blank" rel="noopener" data-i18n="call.map">Haritada aç</a>
+        <a class="btn btn--line" href="https://www.google.com/maps/search/?api=1&amp;query=Ye%C5%9Filce%20Mah.%20Desteg%C3%BCl%20Sk.%20No%3A1%2F1%20Ka%C4%9F%C4%B1thane%20%C4%B0stanbul" target="_blank" rel="noopener" data-i18n="call.map">Haritada göster</a>
       </div>
       <address>
         ARTIVA İç ve Dış Ticaret Anonim Şirketi<br>
@@ -462,10 +472,10 @@ section[id]{scroll-margin-top:84px}
     <div class="foot">
       <a class="brand" href="#top"><img src="assets/dival/mark-dival.webp" alt="" width="744" height="597" loading="lazy"><span>ARTİVA</span></a>
       <nav aria-label="Alt menü">
-        <a href="#biz" data-i18n="nav.who">Biz kimiz</a>
-        <a href="#hizmetler" data-i18n="nav.what">Ne yapıyoruz</a>
+        <a href="#biz" data-i18n="nav.who">Hakkımızda</a>
+        <a href="#hizmetler" data-i18n="nav.what">Hizmetler</a>
         <a href="#sektorler" data-i18n="nav.sectors">Sektörler</a>
-        <a href="#yol" data-i18n="nav.how">Nasıl ilerliyoruz</a>
+        <a href="#yol" data-i18n="nav.how">Nasıl çalışıyoruz</a>
         <a href="#iletisim" data-i18n="nav.contact">İletişim</a>
       </nav>
     </div>
@@ -480,51 +490,75 @@ section[id]{scroll-margin-top:84px}
 (function(){
   var EN = {
     'skip':'Skip to content',
-    'nav.who':'Who we are','nav.what':'What we do','nav.sectors':'Sectors','nav.how':'How we work','nav.contact':'Contact',
-    'hero.title':'We tie both ends of a trade with one thread.',
-    'hero.lede':'We bring manufacturers and buyers together, and when it makes sense we buy and sell the goods ourselves — from Istanbul, at home and abroad.',
-    'hero.call':'Call us','hero.more':'What we do',
-    'who.title':'Broker and trader, in one house.',
-    'who.intro':'ARTIVA İç ve Dış Ticaret A.Ş. is a trading company in Kağıthane, Istanbul — where Europe meets Asia. On some deals we bring the parties together and run the process; on others we buy the goods on our own account and deliver them to the buyer ourselves. We decide together, at the start, which suits you.',
-    'who.r1.title':'As a broker, we knock on the right door.',
-    'who.r1.text':'We find the right manufacturer or buyer, compare offers, and coordinate the talks and the order. The goods change hands between you and the other side; we hold the process together.',
-    'who.r2.title':'As a trader, we become your one seller.',
-    'who.r2.text':'We buy the goods, invoice them and deliver them. One contract, one invoice, one contact: the rest of the supply chain is our job.',
-    'svc.title':'Seven jobs, one address.',
-    'svc.intro':'Every stitch it takes for a product to travel from the factory to its buyer, done by one hand.',
-    's1.t':'Trading on our own account','s1.d':'We buy the goods from the producer and sell them to you on a single invoice, taking on the sourcing risk and follow-up.',
-    's2.t':'Wholesale supply','s2.d':'For regular, high-volume needs we set up an uninterrupted product flow and a backup source plan.',
-    's3.t':'Manufacturer research','s3.d':'We find factories that fit your need and shortlist them by capacity, product range and price level.',
-    's4.t':'Buyer–seller introductions','s4.d':'We introduce the right buyer to the right producer and prepare the first conversation.',
-    's5.t':'Import & export handling','s5.d':'On cross-border deals we run correspondence, samples, paperwork and the shipping calendar from one desk.',
-    's6.t':'Specs & price framing','s6.d':'We put product, quantity, quality expectations and target price in writing, so negotiation starts on firm ground.',
-    's7.t':'Market reading','s7.d':'Before a new product or country, we review demand, competitors and the price band and hand you a short brief.',
-    'sec.title':'Eight sectors, one desk.',
-    'sec.intro':'The fields we work in with the same care. Pick one for details.',
-    'sec.hint':'Pick a sector.',
-    'x1.t':'Textiles & ready-to-wear','x2.t':'Machinery & spare parts','x3.t':'Building materials','x4.t':'Food & agriculture',
-    'x5.t':'Electronics','x6.t':'Consumer goods','x7.t':'Chemicals & raw materials','x8.t':'Packaging & plastics',
-    'how.title':'A deal in five knots.',
-    'how.intro':'Price, quantity and scope are in writing before work begins. We tie off each stage with a knot, and only then move on to the next.',
-    'p1.t':'We listen','p1.d':'Together we pin down the product, quantity, quality and target price.',
-    'p2.t':'We search','p2.d':'We scan candidate manufacturers or buyers and draw up a shortlist.',
-    'p3.t':'We compare','p3.d':'We lay the offers side by side with their price, quantity and terms.',
-    'p4.t':'We close','p4.d':'We bring the parties together — or buy the goods ourselves.',
-    'p5.t':'We deliver','p5.d':'We follow the order through to delivery and stay ready for the next request.',
-    'call.title':'Let’s start with one call.',
-    'call.intro':'One number, one person in charge. Tell us about your product, quantity and target market, and we’ll decide together which route fits.',
-    'call.btn':'Call now','call.map':'Open in Maps',
+    'nav.who':'About us',
+    'nav.what':'Services',
+    'nav.sectors':'Sectors',
+    'nav.how':'How we work',
+    'nav.contact':'Contact',
+    'hero.title':'We bring manufacturers and buyers together.',
+    'hero.lede':'We find the right manufacturer or buyer for you, and when needed we buy and sell the goods ourselves. We work from Istanbul, across Türkiye and abroad.',
+    'hero.call':'Call us',
+    'hero.more':'Our services',
+    'who.title':'Broker and supplier in one.',
+    'who.intro':'ARTIVA İç ve Dış Ticaret A.Ş. is a trading company based in Kağıthane, Istanbul. On some deals we bring the buyer and the seller together and manage the whole process. On others we buy the goods ourselves and deliver them to the buyer. At the start, we decide together which way suits you best.',
+    'who.r1.title':'As a broker: we find the right company.',
+    'who.r1.text':'We find a suitable manufacturer or buyer, compare offers, and follow up on the talks and the order. The goods pass directly between you and the other side; we make sure everything runs smoothly.',
+    'who.r2.title':'As a supplier: we are your single contact.',
+    'who.r2.text':'We buy the goods, invoice you and deliver them. One contract, one invoice, one contact. We take care of the rest.',
+    'svc.title':'Seven services, one address.',
+    'svc.intro':'We handle every step it takes for a product to get from the factory to the buyer.',
+    's1.t':'Buying and selling for our own account',
+    's1.d':'We buy the goods from the manufacturer and sell them to you on a single invoice. We take on the supply risk and the follow-up.',
+    's2.t':'Wholesale supply',
+    's2.d':'For regular, large orders we keep the goods coming without delays and keep a backup supplier ready.',
+    's3.t':'Finding manufacturers',
+    's3.d':'We find factories that match your needs and make a shortlist based on capacity, product range and price.',
+    's4.t':'Connecting buyers and sellers',
+    's4.d':'We introduce the right buyer to the right manufacturer and set up the first meeting.',
+    's5.t':'Import and export',
+    's5.d':'For international deals we handle the emails, samples, documents and shipping dates in one place.',
+    's6.t':'Product and price details',
+    's6.d':'We put the product, quantity, expected quality and target price in writing, so negotiations start on a solid basis.',
+    's7.t':'Market research',
+    's7.d':'Before you enter a new product or country, we look at demand, competitors and prices and give you a short report.',
+    'sec.title':'Eight sectors, one team.',
+    'sec.intro':'The fields we work in, all with the same care. Choose one to see the details.',
+    'sec.hint':'Choose a sector.',
+    'x1.t':'Textiles and clothing',
+    'x2.t':'Machinery and spare parts',
+    'x3.t':'Building materials',
+    'x4.t':'Food and agriculture',
+    'x5.t':'Electronics',
+    'x6.t':'Consumer goods',
+    'x7.t':'Chemicals and raw materials',
+    'x8.t':'Packaging and plastics',
+    'how.title':'A deal in five steps.',
+    'how.intro':'Before we start, we agree on price, quantity and scope in writing. We never move on to the next step before the current one is done.',
+    'p1.t':'We listen',
+    'p1.d':'Together we agree on the product, quantity, quality and target price.',
+    'p2.t':'We search',
+    'p2.d':'We look for suitable manufacturers or buyers and make a shortlist.',
+    'p3.t':'We compare',
+    'p3.d':'We put the offers side by side: price, quantity and terms.',
+    'p4.t':'We close the deal',
+    'p4.d':'We bring the two sides together, or we buy the goods ourselves.',
+    'p5.t':'We deliver',
+    'p5.d':'We follow the order until delivery and are ready for your next request.',
+    'call.title':'Let’s start with a phone call.',
+    'call.intro':'One number, one person in charge. Tell us about your product, the quantity and the market you want to sell to or buy from, and we’ll find the best way together.',
+    'call.btn':'Call now',
+    'call.map':'Show on map',
     'foot.rights':'All rights reserved.'
   };
   var NOTES = {
-    tr:{x1:'Kumaş, iplik ve hazır giyimde üretici ve alıcı ağı.',x2:'Üretim hatları için makine ve parça tedariki.',x3:'Şantiye ve proje ihtiyaçları için malzeme.',x4:'İşlenmiş gıda ve tarım ürünlerinde toplu tedarik.',x5:'Bileşenden son ürüne elektronik tedariki.',x6:'Mağaza ve dağıtım için günlük tüketim ürünleri.',x7:'Endüstriyel kimyasallar ve üretim hammaddeleri.',x8:'Ambalaj malzemeleri ve plastik ürünler.'},
-    en:{x1:'A network of fabric, yarn and garment producers and buyers.',x2:'Machinery and parts for production lines.',x3:'Materials for site and project needs.',x4:'Bulk supply of processed food and farm produce.',x5:'Electronics, from components to finished goods.',x6:'Everyday goods for retail and distribution.',x7:'Industrial chemicals and production inputs.',x8:'Packaging materials and plastic goods.'}
+    tr:{x1:'Kumaş, iplik ve hazır giyimde geniş bir üretici ve alıcı ağı.',x2:'Üretim hatları için makine ve yedek parça temini.',x3:'İnşaat ve projeler için gereken malzemeler.',x4:'İşlenmiş gıda ve tarım ürünlerinde toptan tedarik.',x5:'Parçadan bitmiş ürüne kadar elektronik tedariki.',x6:'Mağazalar ve dağıtımcılar için günlük kullanım ürünleri.',x7:'Sanayi kimyasalları ve üretim hammaddeleri.',x8:'Ambalaj malzemeleri ve plastik ürünler.'},
+    en:{x1:'A wide network of fabric, yarn and clothing makers and buyers.',x2:'Machines and spare parts for production lines.',x3:'Materials for construction sites and projects.',x4:'Wholesale supply of processed food and farm products.',x5:'Electronics, from parts to finished products.',x6:'Everyday products for shops and distributors.',x7:'Industrial chemicals and raw materials for production.',x8:'Packaging materials and plastic products.'}
   };
   var META = {
     tr:{title:document.title, desc:document.querySelector('meta[name=description]').content},
-    en:{title:'ARTİVA — Domestic & Foreign Trade Inc.', desc:'ARTIVA İç ve Dış Ticaret A.Ş. — an Istanbul broker and trader: manufacturer research, buyer–seller matching, import/export handling and own-account trading.'}
+    en:{title:'ARTİVA — Domestic & Foreign Trade Inc.', desc:'ARTIVA İç ve Dış Ticaret A.Ş. — a broker and trading company in Istanbul: finding manufacturers, connecting buyers and sellers, import and export, and buying and selling for its own account.'}
   };
-  var PLATES = {h1:[9.7214,1944,515,12.8435,2568,514],who:[5.6091,1122,515,8.5388,1708,515],svc:[4.5657,913,514,5.823,1164,514],sec:[10.1819,2036,299,10.6453,2129,299],how:[6.3435,1268,514,4.7166,943,515],call:[5.6902,1138,515,6.2039,1241,515]};
+  var PLATES = {h1:[7.3269,1465,515,11.2752,2255,515],who:[7.8587,1571,514,7.0711,1414,514],svc:[5.8377,1167,515,6.7341,1347,515],sec:[9.7629,1952,299,10.9861,2197,299],how:[5.5603,1112,515,4.5418,908,515],call:[5.6902,1138,515,6.7278,1345,515]};
   var lang = 'tr', current = null;
   var nodes = [].slice.call(document.querySelectorAll('[data-i18n]'));
   nodes.forEach(function(n){ n.setAttribute('data-tr', n.innerHTML); });
@@ -577,21 +611,27 @@ section[id]{scroll-margin-top:84px}
   var header = document.getElementById('header');
 
   // light on the gold: follows the pointer; on touch it sweeps once
-  var emblem = document.getElementById('emblem'), hero = document.getElementById('top');
+  var emblem = document.getElementById('emblem');
+  var sheen = document.createElement('div'); sheen.className = 'sheen'; sheen.setAttribute('aria-hidden', 'true');
+  document.body.appendChild(sheen);
   function light(px, py){
     var r = emblem.getBoundingClientRect();
     emblem.style.setProperty('--mx', ((px - r.left) / r.width * 100) + '%');
     emblem.style.setProperty('--my', ((py - r.top) / r.height * 100) + '%');
-    var h = hero.getBoundingClientRect();
-    hero.style.setProperty('--lx', ((px - h.left) / h.width * 100) + '%');
-    hero.style.setProperty('--ly', ((py - h.top) / h.height * 100) + '%');
+    sheen.style.setProperty('--lx', px + 'px');
+    sheen.style.setProperty('--ly', py + 'px');
+  }
+  if (!reduce && window.matchMedia('(hover: hover) and (pointer: fine)').matches){
+    document.documentElement.classList.add('lit');
+    var raf = 0, lx = 0, ly = 0;
+    addEventListener('pointermove', function(e){
+      if (e.pointerType !== 'mouse') return;
+      lx = e.clientX; ly = e.clientY; sheen.classList.add('on');
+      if (!raf) raf = requestAnimationFrame(function(){ raf = 0; light(lx, ly); });
+    }, {passive:true});
+    document.addEventListener('mouseout', function(e){ if (!e.relatedTarget) sheen.classList.remove('on'); });   // left the window
   }
   if (!reduce){
-    var raf = 0, lx = 0, ly = 0;
-    hero.addEventListener('pointermove', function(e){
-      lx = e.clientX; ly = e.clientY;
-      if (!raf) raf = requestAnimationFrame(function(){ raf = 0; light(lx, ly); });
-    });
     // opening sweep: the light crosses the sırma once
     var t0 = null;
     requestAnimationFrame(function sweep(t){
